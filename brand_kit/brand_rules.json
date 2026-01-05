@@ -1,0 +1,24 @@
+{
+  "colors": {
+    "approved": ["#123456", "#0A1B2C", "#EFEFEF"],
+    "tolerance": 10
+  },
+  "fonts": {
+    "approved": ["Inter", "Roboto"],
+    "fallback": ["Arial"]
+  },
+  "logo": {
+    "min_padding_px": 24,
+    "allowed_positions": ["top-left", "center"]
+  },
+  "layout": {
+    "allowed_aspect_ratios": ["1:1", "16:9"]
+  },
+  "tone": {
+    "expected": "professional",
+    "restricted_words": ["cheap", "guaranteed", "free", "limited offer"],
+    "allowed_tone_labels": ["professional", "informative"]
+  }
+
+
+}

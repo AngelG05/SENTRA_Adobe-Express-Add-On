@@ -1,0 +1,18 @@
+{
+  "canvas": {
+    "width": 1080,
+    "height": 1080
+  },
+  "elements": [
+    {
+      "type": "text",
+      "font": "Comic Sans",
+      "color": "#FF5733"
+    },
+    {
+      "type": "logo",
+      "position": "bottom-right",
+      "padding": 10
+    }
+  ]
+}

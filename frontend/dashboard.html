@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SENTRA – Brand Dashboard</title>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 30px;
+            max-width: 700px;
+            margin: auto;
+        }
+        .card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>SENTRA – Brand Compliance Dashboard</h2>
+
+<div id="metrics"></div>
+
+<script>
+async function loadDashboard() {
+    const res = await fetch("http://192.168.0.105:5000/dashboard");
+    const data = await res.json();
+
+    let html = "";
+
+    html += `<div class="card">Total Checks: <b>${data.total_checks}</b></div>`;
+    html += `<div class="card">Average Brand Score: <b>${data.average_brand_score}</b></div>`;
+    html += `<div class="card">Avg Visual Violations: <b>${data.average_visual_violations}</b></div>`;
+    html += `<div class="card">Avg Tone Violations: <b>${data.average_tone_violations}</b></div>`;
+
+    document.getElementById("metrics").innerHTML = html;
+}
+
+loadDashboard();
+</script>
+
+</body>
+</html>

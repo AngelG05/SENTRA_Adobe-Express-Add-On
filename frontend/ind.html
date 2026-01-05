@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SENTRA – Brand Compliance Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            max-width: 900px;
+            margin: auto;
+        }
+        textarea {
+            width: 100%;
+            height: 220px;
+            font-family: monospace;
+        }
+        button {
+            padding: 8px 16px;
+            margin-top: 10px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .error {
+            color: red;
+        }
+        .score {
+            font-size: 20px;
+            margin-top: 15px;
+        }
+        .rewrite-box {
+            border: 1px solid #ccc;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 6px;
+            background: #fafafa;
+        }
+        .original-text {
+            color: red;
+        }
+        .rewritten-text {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<h2>SENTRA – Brand Compliance Checker</h2>
+
+<h3>Paste Design JSON</h3>
+
+<textarea id="jsonInput">
+{
+  "canvas": {
+    "width": 1080,
+    "height": 1080
+  },
+  "elements": [
+    {
+      "type": "text",
+      "content": "Buy now cheap offer",
+      "font": "Comic Sans",
+      "color": "#FF5733"
+    },
+    {
+      "type": "logo",
+      "position": "bottom-right",
+      "padding": 10
+    }
+  ]
+}
+</textarea>
+
+<br>
+
+<button onclick="checkDesign()">Check Brand Compliance</button>
+<button onclick="fixDesign()">Fix All Issues</button>
+
+<div id="output"></div>
+
+<script>
+let toneIssuesCache = [];
+
+/* ---------------- CHECK DESIGN ---------------- */
+async function checkDesign() {
+    const jsonText = document.getElementById("jsonInput").value;
+
+    let jsonData;
+    try {
+        jsonData = JSON.parse(jsonText);
+    } catch {
+        alert("Invalid JSON format");
+        return;
+    }
+
+    const apiUrl = "http://192.168.0.105:5000/check";
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(jsonData)
+        });
+
+        const data = await response.json();
+
+        let html = "<h3>Visual Violations:</h3>";
+
+        if (data.violations.length === 0) {
+            html += "<p>No visual violations 🎉</p>";
+        } else {
+            data.violations.forEach(v => {
+                html += `<p class="error">- ${v.message}</p>`;
+            });
+        }
+
+        /* ---------- TONE ISSUES WITH REWRITE ---------- */
+        toneIssuesCache = [];
+
+        if (data.tone_issues && data.tone_issues.length > 0) {
+            html += "<h3>Tone Issues (AI Rewrite)</h3>";
+
+            data.tone_issues.forEach((t, index) => {
+                toneIssuesCache.push(t);
+
+                html += `
+                    <div class="rewrite-box">
+                        <p class="original-text">
+                            ❌ Original Text:<br>
+                            "${t.text}"
+                        </p>
+
+                        <p class="rewritten-text">
+                            ✅ AI Rewrite Suggestion:<br>
+                            "${t.suggestion}"
+                        </p>
+
+                        <button onclick="applyRewrite(${index})">
+                            Apply Rewrite
+                        </button>
+                    </div>
+                `;
+            });
+        } else {
+            html += "<p>No tone issues 🎉</p>";
+        }
+
+        html += `<div class="score">Brand Score: <b>${data.brand_score}</b></div>`;
+
+        document.getElementById("output").innerHTML = html;
+
+    } catch (err) {
+        document.getElementById("output").innerHTML =
+            `<p class="error">Error: Cannot connect to SENTRA API</p>`;
+    }
+}
+
+/* ---------------- APPLY AI REWRITE ---------------- */
+function applyRewrite(index) {
+    const issue = toneIssuesCache[index];
+
+    let jsonData = JSON.parse(
+        document.getElementById("jsonInput").value
+    );
+
+    jsonData.elements.forEach(el => {
+        if (el.type === "text" && el.content === issue.text) {
+            el.content = issue.suggestion;
+        }
+    });
+
+    document.getElementById("jsonInput").value =
+        JSON.stringify(jsonData, null, 2);
+
+    alert("AI rewrite applied. Re-run compliance check.");
+}
+
+/* ---------------- AUTO FIX (LEVEL 1) ---------------- */
+async function fixDesign() {
+    const jsonText = document.getElementById("jsonInput").value;
+
+    let jsonData;
+    try {
+        jsonData = JSON.parse(jsonText);
+    } catch {
+        alert("Invalid JSON");
+        return;
+    }
+
+    const apiUrl = "http://192.168.0.105:5000/fix";
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(jsonData)
+        });
+
+        const data = await response.json();
+
+        let html = "<h3>Auto-Fix Applied</h3>";
+
+        if (!data.fixed) {
+            html += "<p>No fixes needed 🎉</p>";
+        } else {
+            html += "<ul>";
+            data.changes.forEach(c => {
+                html += `<li>${c}</li>`;
+            });
+            html += "</ul>";
+        }
+
+        document.getElementById("jsonInput").value =
+            JSON.stringify(data.fixed_design, null, 2);
+
+        document.getElementById("output").innerHTML = html;
+
+    } catch (err) {
+        document.getElementById("output").innerHTML =
+            `<p class="error">Error: Cannot connect to SENTRA API</p>`;
+    }
+}
+</script>
+
+</body>
+</html>

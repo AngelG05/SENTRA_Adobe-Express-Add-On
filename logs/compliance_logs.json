@@ -1,0 +1,92 @@
+[
+  {
+    "timestamp": "2025-12-23T16:15:24.784655",
+    "brand_score": 35,
+    "visual_violations": 4,
+    "tone_violations": 2
+  },
+  {
+    "timestamp": "2025-12-23T16:15:26.198192",
+    "brand_score": 35,
+    "visual_violations": 4,
+    "tone_violations": 2
+  },
+  {
+    "timestamp": "2025-12-23T16:15:28.720419",
+    "brand_score": 35,
+    "visual_violations": 4,
+    "tone_violations": 2
+  },
+  {
+    "timestamp": "2025-12-23T16:15:30.086309",
+    "brand_score": 35,
+    "visual_violations": 4,
+    "tone_violations": 2
+  },
+  {
+    "timestamp": "2025-12-23T16:15:30.975572",
+    "brand_score": 35,
+    "visual_violations": 4,
+    "tone_violations": 2
+  },
+  {
+    "timestamp": "2025-12-23T16:15:31.655572",
+    "brand_score": 35,
+    "visual_violations": 4,
+    "tone_violations": 2
+  },
+  {
+    "timestamp": "2025-12-23T16:15:32.146336",
+    "brand_score": 35,
+    "visual_violations": 4,
+    "tone_violations": 2
+  },
+  {
+    "timestamp": "2025-12-23T16:15:32.916406",
+    "brand_score": 35,
+    "visual_violations": 4,
+    "tone_violations": 2
+  },
+  {
+    "timestamp": "2025-12-23T16:15:33.620889",
+    "brand_score": 35,
+    "visual_violations": 4,
+    "tone_violations": 2
+  },
+  {
+    "timestamp": "2025-12-23T16:15:33.710577",
+    "brand_score": 35,
+    "visual_violations": 4,
+    "tone_violations": 2
+  },
+  {
+    "timestamp": "2025-12-23T16:15:35.975976",
+    "brand_score": 100,
+    "visual_violations": 0,
+    "tone_violations": 2
+  },
+  {
+    "timestamp": "2025-12-23T16:15:37.348739",
+    "brand_score": 35,
+    "visual_violations": 4,
+    "tone_violations": 2
+  },
+  {
+    "timestamp": "2025-12-23T16:18:31.126013",
+    "brand_score": 35,
+    "visual_violations": 4,
+    "tone_violations": 0
+  },
+  {
+    "timestamp": "2025-12-23T16:18:32.135334",
+    "brand_score": 35,
+    "visual_violations": 4,
+    "tone_violations": 0
+  },
+  {
+    "timestamp": "2025-12-23T16:18:32.935922",
+    "brand_score": 35,
+    "visual_violations": 4,
+    "tone_violations": 0
+  }
+]
