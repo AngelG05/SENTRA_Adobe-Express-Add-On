@@ -10,7 +10,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-HOST_IP = "127.0.0.1"   # ya "0.0.0.0" ya apna LAN IP
+HOST_IP = "192.168.1.2"   # ya "0.0.0.0" ya apna LAN IP
 PORT = 5000
 
 @app.route("/")
@@ -56,4 +56,4 @@ def dashboard():
 
 
 if __name__ == "__main__":
-    app.run(host= '192.168.0.105', port=5000, debug=True)
+    app.run(host= '192.168.1.2', port=5000, debug=True)
